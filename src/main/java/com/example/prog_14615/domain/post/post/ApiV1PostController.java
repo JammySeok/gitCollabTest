@@ -3,13 +3,13 @@ package com.example.prog_14615.domain.post.post;
 import com.example.prog_14615.domain.post.member.Member;
 import com.example.prog_14615.domain.post.member.MemberService;
 import com.example.prog_14615.global.exception.ServiceException;
+import com.example.prog_14615.global.rq.Rq;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sql.rowset.serial.SerialException;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +17,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ApiV1PostController {
 
-    public final PostService postService;
-    public final MemberService memberService;
+    private final PostService postService;
+    private final MemberService memberService;
+    private final Rq rq;
 
     @Getter
     @NoArgsConstructor
@@ -27,10 +28,9 @@ public class ApiV1PostController {
         private String content;
     }
 
-
     @ResponseBody
     @PostMapping("/api/v1/posts")
-    public RsData write(@RequestBody WriteReqBody writeReqBody, @RequestHeader("Authorization") String apiKey) {
+    public RsData writeV1(@RequestBody WriteReqBody writeReqBody, @RequestHeader("Authorization") String apiKey) {
 
         // apiKey 보낼 때 앞에 Bearer를 붙이는게 관례
         if(apiKey.startsWith("Bearer ")) {
@@ -55,16 +55,27 @@ public class ApiV1PostController {
     }
 
     @ResponseBody
+    @PostMapping("/api/v2/posts")
+    public RsData writeV2(@RequestBody WriteReqBody writeReqBody) {
+            Member member = rq.getActor();
+            postService.write(writeReqBody.title, writeReqBody.content);
+
+            RsData rsData = new RsData();
+            rsData.setResultCode("200");
+            rsData.setMessage(member.getUsername() + "님의 글 작성이 완료되었습니다.");
+
+            return rsData;
+    }
+
+    @ResponseBody
     @GetMapping("/api/v1/posts/{id}")
     public Post getPostById(@PathVariable("id") Long id) {
-
         return postService.getIdList(id);
     }
 
     @ResponseBody
     @GetMapping("api/v1/posts")
     public List<Post> getPost() {
-
         return postService.getList();
     }
 
@@ -72,7 +83,6 @@ public class ApiV1PostController {
     @DeleteMapping("/api/v1/posts/{id}")
     public String delete(@PathVariable("id") Long id) {
         postService.delete(id);
-
         return "삭제 되었습니다.";
     }
 

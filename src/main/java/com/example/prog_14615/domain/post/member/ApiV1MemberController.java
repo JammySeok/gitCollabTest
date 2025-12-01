@@ -2,9 +2,7 @@ package com.example.prog_14615.domain.post.member;
 
 import com.example.prog_14615.domain.post.post.RsData;
 import com.example.prog_14615.global.exception.ServiceException;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +17,20 @@ import java.util.Optional;
 public class ApiV1MemberController {
 
     private final MemberService memberService;
+    private final AuthTokenService authTokenService;
 
     @Getter
     @NoArgsConstructor
     static class LoginReqBody {
         String username;
         String password;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    static class LoginResBody {
+        private String apiKey;
+        private String accessToken;
     }
 
     @PostMapping("/api/v1/login")
@@ -43,10 +49,16 @@ public class ApiV1MemberController {
             throw new ServiceException("401", "비밀번호를 틀렸습니다.");
         }
 
+        // 로그인 성공하면 apiKey와 함께 accessToken 발급
+        String apiKey = member.getApiKey();
+        String accessToken = authTokenService.genAccessToken(member);
+
+        LoginResBody resBody = new LoginResBody(apiKey, accessToken);
+
         RsData rsData = new RsData();
         rsData.setResultCode("200");
         rsData.setMessage(loginReqBody.username + "님 로그인 하였습니다.");
-        rsData.setData(member.getApiKey());
+        rsData.setData(resBody);
 
         return rsData;
     }
