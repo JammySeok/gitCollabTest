@@ -1,0 +1,47 @@
+[33mcommit 6e18a00a4b9720f3f5def1940571ebec7d4e5ac0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: JammySeok <jjh326326@naver.com>
+Date:   Wed Dec 3 20:55:43 2025 +0900
+
+    first commit
+
+[33mcommit 08f4f3f6cf0503d9f450cec49c5ae34215c280b0[m
+Author: JammySeok <jjh326326@naver.com>
+Date:   Wed Dec 3 18:50:47 2025 +0900
+
+    PUT - 수정
+    
+    put 요청으로 수정로직
+
+[33mcommit a629309841ddb6bdf59806f86e19248c60f32820[m
+Author: JammySeok <jjh326326@naver.com>
+Date:   Tue Dec 2 19:20:32 2025 +0900
+
+    데이터 베이스와 인증 (11/26, 수) 과제
+    
+    로그인 허용하면 토근값 유저에게 주고
+    화면에 accessToken 보여지게
+
+[33mcommit c4f230de1bef425fb5e6ca973a55aebd3d2b073c[m
+Author: JammySeok <jjh326326@naver.com>
+Date:   Mon Dec 1 22:13:22 2025 +0900
+
+    251201 jwt 적용
+    
+    jwt 기본 설정 및 게시글 작성 인증
+
+[33mcommit b04981713adff386a30a8f2fb104a16fe5101385[m
+Author: JammySeok <jjh326326@naver.com>
+Date:   Sat Nov 29 02:49:25 2025 +0900
+
+    로그인 페이지
+    
+    (Rest API) 로그인페이지 작동되게 구현
+    JWT x
+
+[33mcommit a6069c23b4e0cc37c9ecbdff790889a134f0ee8a[m
+Author: JammySeok <jjh326326@naver.com>
+Date:   Fri Nov 28 22:25:48 2025 +0900
+
+    지금껏 한 스프링 내용 commit
+    
+    자바 스프링 + restAPI + JWT는 다음주에
